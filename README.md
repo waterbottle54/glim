@@ -1,1 +1,3 @@
 # MFCStart
+
+![Screenshot](screenshot.png)
