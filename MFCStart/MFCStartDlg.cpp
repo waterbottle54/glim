@@ -52,6 +52,7 @@ END_MESSAGE_MAP()
 
 CMFCStartDlg::CMFCStartDlg(CWnd* pParent /*=nullptr*/)
 	: CDialogEx(IDD_MFCSTART_DIALOG, pParent)
+	, m_nStartX(0)
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 }
@@ -59,6 +60,7 @@ CMFCStartDlg::CMFCStartDlg(CWnd* pParent /*=nullptr*/)
 void CMFCStartDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
+	DDX_Text(pDX, IDC_START_X, m_nStartX);
 }
 
 BEGIN_MESSAGE_MAP(CMFCStartDlg, CDialogEx)
@@ -177,7 +179,7 @@ void CMFCStartDlg::OnEnChangeEdit1()
 
 void CMFCStartDlg::OnStnClickedLogo()
 {
-	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	// glim 웹페이지 브라우징
 	CString url = _T("https://www.iglim.net/");
 	ShellExecute(0, NULL, url, NULL, NULL, SW_SHOWDEFAULT);
 	
@@ -186,23 +188,17 @@ void CMFCStartDlg::OnStnClickedLogo()
 
 void CMFCStartDlg::OnEnChangeStartX()
 {
-	// TODO:  RICHEDIT 컨트롤인 경우, 이 컨트롤은
-	// CDialogEx::OnInitDialog() 함수를 재지정 
-	//하고 마스크에 OR 연산하여 설정된 ENM_CHANGE 플래그를 지정하여 CRichEditCtrl().SetEventMask()를 호출하지 않으면
-	// 이 알림 메시지를 보내지 않습니다.
+	UpdateData(TRUE);  // 멤버 변수 업데이트
+	AfxMessageBox(m_nStartX);
 
-	// TODO:  여기에 컨트롤 알림 처리기 코드를 추가합니다.
 }
 
 
 void CMFCStartDlg::OnEnChangeStartY()
 {
-	// TODO:  RICHEDIT 컨트롤인 경우, 이 컨트롤은
-	// CDialogEx::OnInitDialog() 함수를 재지정 
-	//하고 마스크에 OR 연산하여 설정된 ENM_CHANGE 플래그를 지정하여 CRichEditCtrl().SetEventMask()를 호출하지 않으면
-	// 이 알림 메시지를 보내지 않습니다.
+	UpdateData(TRUE);  // 멤버 변수 업데이트
+	AfxMessageBox(m_nStartX);
 
-	// TODO:  여기에 컨트롤 알림 처리기 코드를 추가합니다.
 }
 
 
@@ -243,8 +239,5 @@ void CMFCStartDlg::OnBnClickedButtonAction()
 void CMFCStartDlg::OnBnClickedButtonOpen()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
-		2
-		3
-		4
-		5
+
 }

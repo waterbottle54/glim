@@ -8,6 +8,10 @@
 // CMFCStartDlg 대화 상자
 class CMFCStartDlg : public CDialogEx
 {
+private:
+	CPoint ptStart;
+	CPoint ptEnd;
+
 // 생성입니다.
 public:
 	CMFCStartDlg(CWnd* pParent = nullptr);	// 표준 생성자입니다.
@@ -41,4 +45,7 @@ public:
 	afx_msg void OnBnClickedButtonDraw();
 	afx_msg void OnBnClickedButtonAction();
 	afx_msg void OnBnClickedButtonOpen();
+private:
+	// x coordinates of starting point
+	int m_nStartX;
 };
