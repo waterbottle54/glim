@@ -33,7 +33,7 @@
     <ClInclude Include="pch.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Circle.h">
+    <ClInclude Include="CDetectDialog.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
@@ -47,7 +47,7 @@
     <ClCompile Include="pch.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Circle.cpp">
+    <ClCompile Include="CDetectDialog.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
@@ -60,6 +60,7 @@
     <None Include="res\MFCStart.rc2">
       <Filter>리소스 파일</Filter>
     </None>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\MFCStart.ico">

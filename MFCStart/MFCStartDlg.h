@@ -9,8 +9,7 @@
 class CMFCStartDlg : public CDialogEx
 {
 private:
-	CPoint ptStart;
-	CPoint ptEnd;
+	CImage m_image;
 
 // 생성입니다.
 public:
@@ -48,4 +47,10 @@ public:
 private:
 	// x coordinates of starting point
 	int m_nStartX;
+	// y coord of start point
+	int m_nStartY;
+	// x coordinates of end point
+	int m_nEndX;
+	// y coordinates of end point
+	int m_nEndY;
 };

@@ -7,6 +7,7 @@
 #include "MFCStart.h"
 #include "MFCStartDlg.h"
 #include "afxdialogex.h"
+#include "CDetectDialog.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -53,6 +54,9 @@ END_MESSAGE_MAP()
 CMFCStartDlg::CMFCStartDlg(CWnd* pParent /*=nullptr*/)
 	: CDialogEx(IDD_MFCSTART_DIALOG, pParent)
 	, m_nStartX(0)
+	, m_nStartY(0)
+	, m_nEndX(0)
+	, m_nEndY(0)
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 }
@@ -61,6 +65,9 @@ void CMFCStartDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
 	DDX_Text(pDX, IDC_START_X, m_nStartX);
+	DDX_Text(pDX, IDC_START_Y, m_nStartY);
+	DDX_Text(pDX, IDC_END_X, m_nEndX);
+	DDX_Text(pDX, IDC_END_Y, m_nEndY);
 }
 
 BEGIN_MESSAGE_MAP(CMFCStartDlg, CDialogEx)
@@ -182,51 +189,52 @@ void CMFCStartDlg::OnStnClickedLogo()
 	// glim 웹페이지 브라우징
 	CString url = _T("https://www.iglim.net/");
 	ShellExecute(0, NULL, url, NULL, NULL, SW_SHOWDEFAULT);
-	
 }
 
 
 void CMFCStartDlg::OnEnChangeStartX()
 {
 	UpdateData(TRUE);  // 멤버 변수 업데이트
-	AfxMessageBox(m_nStartX);
-
 }
 
 
 void CMFCStartDlg::OnEnChangeStartY()
 {
 	UpdateData(TRUE);  // 멤버 변수 업데이트
-	AfxMessageBox(m_nStartX);
 
 }
 
 
 void CMFCStartDlg::OnEnChangeEndX()
 {
-	// TODO:  RICHEDIT 컨트롤인 경우, 이 컨트롤은
-	// CDialogEx::OnInitDialog() 함수를 재지정 
-	//하고 마스크에 OR 연산하여 설정된 ENM_CHANGE 플래그를 지정하여 CRichEditCtrl().SetEventMask()를 호출하지 않으면
-	// 이 알림 메시지를 보내지 않습니다.
-
-	// TODO:  여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	UpdateData(TRUE);  // 멤버 변수 업데이트)
 }
 
 
 void CMFCStartDlg::OnEnChangeEndY()
 {
-	// TODO:  RICHEDIT 컨트롤인 경우, 이 컨트롤은
-	// CDialogEx::OnInitDialog() 함수를 재지정 
-	//하고 마스크에 OR 연산하여 설정된 ENM_CHANGE 플래그를 지정하여 CRichEditCtrl().SetEventMask()를 호출하지 않으면
-	// 이 알림 메시지를 보내지 않습니다.
-
-	// TODO:  여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	UpdateData(TRUE);  // 멤버 변수 업데이트
 }
 
 
 void CMFCStartDlg::OnBnClickedButtonDraw()
 {
-	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	int nWidth = 640;
+	int nHeight = 480;
+	int nBpp = 8;
+
+	m_image.Create(nWidth, nHeight, nBpp);
+	if (nBpp == 8) {
+		static RGBQUAD rgb[256];
+		for (int i = 0; i < 256; i++)
+			rgb[i].rgbRed = rgb[i].rgbGreen = rgb[i].rgbBlue = i;
+		m_image.SetColorTable(0, 256, rgb);
+	}
+
+	int nPitch = m_image.GetPitch();
+	unsigned char* fm = (unsigned char*)m_image.GetBits();
+
+	memset(fm, 0xff, nWidth * nHeight);
 }
 
 
@@ -238,6 +246,8 @@ void CMFCStartDlg::OnBnClickedButtonAction()
 
 void CMFCStartDlg::OnBnClickedButtonOpen()
 {
-	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
-
+	CDetectDialog dialog;
+	dialog.m_imagePath = "image/yellow.jpg";
+	dialog.DoModal();
+	
 }
