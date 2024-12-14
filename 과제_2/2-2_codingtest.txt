@@ -1,0 +1,26 @@
+#include <string>
+#include <vector>
+
+using namespace std;
+
+int solution(string my_string, string is_prefix) {
+    if ((my_string.size() < 1) || (my_string.size() > 100)) {
+        return -1;  // exception: my_string 잘못된 길이  
+    }
+    if ((is_prefix.size() < 1) || (is_prefix.size() > 100)) {
+        return -1;  // exception: is_prefix 잘못된 길이  
+    }
+     if (is_prefix.length() > my_string.length()) {
+        return 0;  // substring이 될 수 없으므로 prefix도 될 수 없다
+    }
+     const char* pstr = my_string.c_str();
+     const char* psub = is_prefix.c_str();
+     while (*psub != NULL) {
+         if (*psub != *pstr) {
+             return 0;
+         }
+         pstr++;
+         psub++;
+     }
+     return 1;
+}

@@ -1,0 +1,18 @@
+#include <string>
+#include <vector>
+
+using namespace std;
+
+int solution(int n, int k) {
+    if ((n <= 0) || (n >= 1000)) {
+        return -1;  // n 잘못된 범위
+    }
+    int bonus = n / 10;
+    if ((k < bonus) || (k >= 1000)) {
+        return -1;  // k 잘못된 범위
+    }
+    int sum = 0;
+    sum += 12000 * n; // 양꼬치 가격 합산
+    sum += 2000 * (k - bonus);  // 음료 가격 합산
+    return sum;
+}

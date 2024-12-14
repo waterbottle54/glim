@@ -1,0 +1,28 @@
+#include <string>
+#include <vector>
+#include <math.h>
+
+using namespace std;
+
+long long solution(int r1, int r2) {
+    // 1. 영역 부등식:
+    // r1*r1 <= (x*x + y*y) <= r2*r2
+    // 2. 각 항에 x*x를 뺀 부등식:
+    // (r1*r1 - x*x) <= y*y <= (r2*r2 - x*x)
+    long long sum = 0;
+    double y_min, y_max;
+    // y축을 제외한 제 1 사분면 상의 계산
+    for (long x = 1; x <= r2; x++) {
+        if (x < r1) {
+            y_min = sqrt((long long)r1*r1 - x*x);
+            y_max = sqrt((long long)r2*r2 - x*x);
+        } else {
+            y_min = 0;
+            y_max = sqrt((long long)r2*r2 - x*x);
+        }
+        sum += ((long long)floor(y_max) - (long long)ceil(y_min) + 1);
+    }
+    
+    // 좌표평면 전체
+    return (sum * 4);
+}

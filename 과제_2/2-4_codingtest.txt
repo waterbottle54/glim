@@ -1,0 +1,44 @@
+#include <string>
+#include <vector>
+#include <math.h>
+
+using namespace std;
+
+vector<int> to_digits(int a) {
+    vector<int> digits = vector<int>();
+    for (int i = 4; i >= 0; i--) {
+        int digit = a / pow(10, i);
+        a -= digit * pow(10, i);
+        if (digit > 0 || !digits.empty()) {
+            digits.push_back(digit);
+        }
+    }
+    return digits;
+}
+
+int to_number(vector<int> digits) {
+    int sum = 0;
+    int num_digits = digits.size();
+    for (int i = 0; i < num_digits; i++) {
+        sum += digits[i] * pow(10, num_digits - i - 1);
+    }
+    return sum;
+}
+
+int oper(int a, int b) {
+
+    vector<int> a_digits = to_digits(a);
+    vector<int> b_digits = to_digits(b);
+
+    for (int i = 0; i < b_digits.size(); i++) {
+        a_digits.push_back(b_digits[i]);
+    }
+
+    return to_number(a_digits);
+}
+
+int solution(int a, int b) {
+    int aob = oper(a, b);
+    int boa = oper(b, a);
+    return aob > boa ? aob : boa;
+}

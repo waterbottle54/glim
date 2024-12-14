@@ -1,0 +1,95 @@
+#include <string>
+#include <vector>
+#include <iostream>
+
+#define NONE        0
+#define BREAD       1
+#define VEGETABLE   2
+#define MEAT        3
+
+using namespace std;
+
+/**
+ * ingredient 에서 4가지 조합이 시작되는 위치를 찾는다.
+ *
+ * @param ingredient 재료가 들어있는 벡터
+ * @return 조합이 시작되는 위치. 조합이 없으면 -1.
+ */
+int find_combination(vector<int> ingredient) {
+
+    int idx_begin = -1;
+    int len_stack = 0;
+    bool okay = false;
+    int len_ingredient = ingredient.size();
+
+    // 순회하며 재료가 일치하면 가상의 버거를 만든다.
+    for (int i = 0; i < len_ingredient; i++) {
+        int current = ingredient[i];
+        if (current == NONE) {  // NONE은 무시
+            continue;
+        }
+        okay = false;
+        switch (len_stack) {
+        case 0: // 빵 차례
+            if (current == BREAD) {
+                okay = true;
+                idx_begin = i;
+            }
+            break;
+        case 1: // 야채 차례
+            if (current == VEGETABLE) {
+                okay = true;
+            }
+            break;
+        case 2: // 고기 차례
+            if (current == MEAT) {
+                okay = true;
+            }
+            break;
+        case 3: // 빵 차례
+            if (current == BREAD) {
+                return idx_begin;       // 가상 버거 완성. 시작 (빵) 위치 리턴.
+            }
+            break;
+        }
+        if (okay) {
+            len_stack++;
+        }
+        else {
+            len_stack = 0;
+            idx_begin = -1;
+            if (current == BREAD) {
+                i--;
+            }
+        }
+    }
+    return -1;  // not found
+}
+
+int solution(vector<int> ingredient) {
+
+    int count = 0;
+    int idx_begin = 0;
+    int len_ingredient = ingredient.size();
+        
+    if (len_ingredient < 1 || len_ingredient > 1000000) {
+        return -1;      // vector size exception
+    }
+    
+    while (idx_begin != -1) {
+        idx_begin = find_combination(ingredient);
+        if (idx_begin != -1) {
+            count++;
+            // 재료 4개를 삭제한다. (메모리 이동하지 않고 값을 NONE(0)으로 만든다.)
+            int num_erased = 0;
+            for (int i = idx_begin; (num_erased < 4) && (i < len_ingredient); i++) {
+                if (ingredient[i] != NONE) {
+                    ingredient[i] = NONE;
+                    num_erased++;
+                }
+            }
+        }
+    }
+
+    return count;
+}
